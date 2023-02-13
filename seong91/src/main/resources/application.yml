@@ -1,0 +1,49 @@
+server:
+  port: 8000
+  servlet:
+    context-path: /blog
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+      
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog?serverTimezone=Asia/Seoul
+    username: seon91
+    password: 1234
+    
+  jpa:
+    open-in-view: true
+    hibernate:
+#     최초에만  create(실행시마다 이전꺼 날라가고, 같은이름으로 테이블을 새로만든다) 하고 나중에는 꼭! Update 로 바꿔놔야된다
+#   작업관리자켜서 서비스에 mysql 작동중인지 확인해봐라
+#   create: 서버 시작마다 디비 초기화
+#   update: 수정사항만 디비에 반영
+#   none: 아무반영도 하지않겠다
+      ddl-auto: create 
+      
+#     엔티티 만들때 변수명 그대로 디비에 만들어주는 전략, 스프링피지컬 전략을 쓰면 테이블 이름 등 카멜표기법을 언더바표기법으로 바꿔서 만들어준다 ex) camelView > camel_view
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      use-new-id-generator-mappings: false
+#     콘솔창에 sql문 띄워준다
+    show-sql: true
+#   sql실행문 콘솔에 띄울때 보기좋게 띄워주겠다
+    properties:
+      hibernate.format_sql: true
+
+  jackson:
+    serialization:
+    # empty_beans가 생길수있다, 비어있는 객체를 허용하는 옵션이다
+      fail-on-empty-beans: false
+    
+    
+    
+    
